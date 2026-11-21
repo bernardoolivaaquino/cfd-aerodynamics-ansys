@@ -1,0 +1,18 @@
+# encoding: utf-8
+# 2025 R1
+SetScriptVersion(Version="25.1.122")
+system1 = GetSystem(Name="SYS")
+mesh1 = system1.GetContainer(ComponentName="Mesh")
+mesh1.Edit()
+Save(Overwrite=True)
+template1 = GetTemplate(TemplateName="FLUENT")
+system2 = template1.CreateSystem(
+    Position="Right",
+    RelativeTo=system1)
+Save(Overwrite=True)
+meshComponent1 = system1.GetComponent(Name="Mesh")
+meshComponent1.Update(AllDependencies=True)
+setupComponent1 = system2.GetComponent(Name="Setup")
+meshComponent1.TransferData(TargetComponent=setupComponent1)
+mesh1.Exit()
+Save(Overwrite=True)
